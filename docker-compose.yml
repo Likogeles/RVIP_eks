@@ -1,7 +1,17 @@
 version: '3'
 
 services:
+  db:
+    image: postgres:alpine3.19
+    environment:
+      POSTGRES_DB: "eksdb"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+    ports:
+      - 5003:5432
   api:
+    depends_on:
+      - 'db'
     build: ./api
     volumes:
       - ./api:/usr/src/app
